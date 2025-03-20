@@ -1,97 +1,118 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+#### Environment to install
 
-# Getting Started
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+# -- Node and nvm installation
+- Download and install nvm:
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.2/install.sh | bash
+- in lieu of restarting the shell
+\. "$HOME/.nvm/nvm.sh"
+- Download and install Node.js:
+nvm install 22
+- Verify the Node.js version:
+node -v # Should print "v22.14.0".
+nvm current # Should print "v22.14.0".
+- Verify npm version:
+npm -v # Should print "10.9.2".
 
-## Step 1: Start Metro
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+# -- Openjdk version 17 installation
+- download version 17 GA (build 17+35) from https://jdk.java.net/archive/
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+- after that, copy the file from your Downloads folder to the java folder:
+- (If you don't have a java folder, just create it before the copy)
+cd ~/Downloads
+sudo cp -r openjdk-17_linux-x64_bin.tar.gz /usr/local/java
 
-```sh
-# Using npm
+- then, open the java folder and extract the file:
+cd usr/local/java
+sudo tar xvzf openjdk-17_linux-x64_bin.tar.gz
+
+- now, configure your java_home on path:
+sudo nano ~/.bashrc
+
+- put the following lines on the end of the file:
+export JAVA_HOME=/usr/local/java/jdk-17
+export PATH=$PATH:/home/andre/bin:$JAVA_HOME/bin
+
+- finally, execute the following commands to finalize the configuration of java 17:
+sudo update-alternatives --install "/usr/bin/java" "java" "/usr/local/java/jdk17/bin/java" 1
+sudo update-alternatives --install "/usr/bin/javac" "javac" "/usr/local/java/jdk17/bin/javac" 1
+sudo update-alternatives --set java /usr/local/java/jdk17/bin/java
+sudo update-alternatives --set javac /usr/local/java/jdk17/bin/javac
+source /etc/profile 
+source ~/.bashrc
+
+
+# -- Android Studio and Android SDK
+- Download Android Studio from https://developer.android.com/studio
+
+- extract and copy the files to ~/android-studio :
+cd ~/Downloads
+sudo tar xvzf android-studio-2024.3.1.13-linux.tar.gz
+sudo cp -r android-studio ~/
+
+- open the android studio folder and run the program:
+cd ~/android-studio/bin
+./studio
+
+- inside the android studio, when selecting what to install, you will need to make sure the following are selected:
+Android SDK
+Android SDK Platform
+Android Virtual Device
+
+- after the starting configuration, open Android Studio, and go to "Configure" then "SDK Manager".
+
+- Go to the "SDK Platforms" tab, then check "Show Package Details" in the bottom right corner. 
+- Expand the Android 15 (VanillaIceCream), then check the following:
+Android SDK Platform 35
+Intel x86 Atom_64 System Image [OR] Google APIs Intel x86 Atom System Image
+
+- Go to the "SDK Tools" tab and check "Show Package Details". 
+- Expand the "Android SDK Build-Tools", then make sure 35.0.0 is selected.
+
+- Finally, click "Apply" to download and install everything selected.
+
+
+# -- Android PATH
+- first open the path file:
+sudo nano ~/.bashrc
+
+- put the following on the end of the file:
+export ANDROID_HOME=~/Android/Sdk
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+
+- then refresh the path:
+source ~/.bashrc
+
+
+- install brew and watchman with these commands:
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+brew update
+brew install watchman
+
+- At last, follow the steps on this link to run on a physical device:
+https://reactnative.dev/docs/running-on-device
+
+- its important to note that you'll need to open two consoles to run the app:
+-- the first console will start the metro
 npm start
-
-# OR using Yarn
-yarn start
-```
-
-## Step 2: Build and run your app
-
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
-
-### Android
-
-```sh
-# Using npm
+-- the second will be the one who runs the app on the device
 npm run android
 
-# OR using Yarn
-yarn android
-```
 
-### iOS
+#### Troubleshooting
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
+# -- Error running the app
+- one solution with errors on app was to open the project on Android Studio and waiting for it to solve some errors.
 
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
+- another solution was to refresh the gradle with
+npx react-native start --reset-cache
 
-```sh
-bundle install
-```
+- the following commands also solved some problems:
+cd .\android\ 
+./gradlew clean
 
-Then, and every time you update your native dependencies, run:
-
-```sh
-bundle exec pod install
-```
-
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
-
-```sh
-# Using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
-```
-
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
-
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
-
-## Step 3: Modify your app
-
-Now that you have successfully run the app, let's make changes!
-
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
-
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
-
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+# -- Starting a new react native app
+- this step IS NOT NECESSARY to run this app, but will show how this project was started for documenting reasons. The command used was:
+npx @react-native-community/cli@latest init wallet
