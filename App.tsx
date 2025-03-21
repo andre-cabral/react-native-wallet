@@ -11,12 +11,13 @@ import {
 } from 'react-native';
 
 import Background from './components/Background';
+import Button from './components/Button';
 
 function App(): React.JSX.Element {
 
   return (
     <Background>
-      
+      <Button />
     </Background>
   );
 }

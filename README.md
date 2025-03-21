@@ -1,6 +1,5 @@
 #### Environment to install
 
-
 # -- Node and nvm installation
 - Download and install nvm:
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.2/install.sh | bash
@@ -99,6 +98,31 @@ https://reactnative.dev/docs/running-on-device
 npm start
 -- the second will be the one who runs the app on the device
 npm run android
+
+
+
+#### Fonts
+
+# -- create a react native config file
+- make the react-native.config.js file
+- put the fonts folder on the config file
+module.exports = {
+  project: {
+          ios: {},
+          android: {}
+  },
+  assets: ['./fonts']
+};
+
+# -- download the files and load them on the project
+- download the ttf files and put them on /fonts folder.
+- run: 
+npx react-native-asset
+
+# -- use the new font on the styles
+- on the styles use (in the example the file is Robotto-Regular.ttf)
+fontFamily: 'Robotto-Regular'
+
 
 
 #### Troubleshooting
