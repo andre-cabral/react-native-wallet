@@ -42,6 +42,8 @@ const styles = StyleSheet.create({
     height: '100%',
     backgroundColor: '#142995',
     paddingBottom: safePadding,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   backgroundShape: {
     position: 'absolute',

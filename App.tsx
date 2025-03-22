@@ -1,24 +1,50 @@
 import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  Image,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack'
 
-import Background from './components/Background';
-import Button from './components/Button';
+import Home from './screens/Home';
+import Register from './screens/Register';
+import List from './screens/List';
+
+const Stack = createNativeStackNavigator();
 
 function App(): React.JSX.Element {
 
   return (
-    <Background>
-      <Button />
-    </Background>
+    <NavigationContainer>
+
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Home"
+          component={Home}
+          options={{
+            title: 'Welcome',
+            headerShown: false,
+          }}
+        />
+
+        <Stack.Screen
+          name="Register"
+          component={Register}
+          options={{
+            title: 'Cadastro',
+            headerTransparent: true,
+          }}
+        />
+
+        <Stack.Screen
+          name="List"
+          component={List}
+          options={{
+            title: 'Wallet Test',
+            headerStyle: {
+              backgroundColor: '#fff',
+            },
+          }}
+        />
+
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
