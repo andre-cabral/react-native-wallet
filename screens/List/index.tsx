@@ -8,7 +8,7 @@ function List(): React.JSX.Element {
 
   return (
     <Background showBackgroundShapes={false}>
-      <Title text='Wallet Test' titleColor='#fff' />
+      <Title text='Wallet Test' titleColor='#FFF' />
     </Background>
   );
 }

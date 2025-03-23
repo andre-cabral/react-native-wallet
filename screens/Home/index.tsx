@@ -14,12 +14,12 @@ function Home(): React.JSX.Element {
 
   return (
     <Background showBackgroundShapes={true}>
-      <Title text='Wallet Test' titleColor='#fff' />
+      <Title text='Wallet Test' titleColor='#FFF' />
       <ButtonWithColor 
         pressFunction={(e: Event) => {navigation.navigate('List')}}
         text='meus cartões'
         buttonColor='#12C2E9'
-        textColor='#fff'
+        textColor='#FFF'
       />
       <ButtonWithColor
         pressFunction={(e: Event) => {navigation.navigate('Register')}}

@@ -1,12 +1,7 @@
 import React from 'react';
 import type {PropsWithChildren} from 'react';
 import {
-  Image,
-  ScrollView,
-  StatusBar,
   StyleSheet,
-  Text,
-  useColorScheme,
   View,
 } from 'react-native';
 
@@ -50,7 +45,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height:'50%',
     transform: [{rotate: '-45deg'}],
-    backgroundColor: '#eee',
+    backgroundColor: '#EEE',
     opacity: 0.2,
   },
   backgroundUp: {

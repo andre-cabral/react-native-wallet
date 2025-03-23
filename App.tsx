@@ -1,6 +1,9 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack'
+import { Provider } from 'react-redux'
+
+import { store } from './store'
 
 import Home from './screens/Home';
 import Register from './screens/Register';
@@ -11,40 +14,49 @@ const Stack = createNativeStackNavigator();
 function App(): React.JSX.Element {
 
   return (
-    <NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator>
 
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Home"
-          component={Home}
-          options={{
-            title: 'Welcome',
-            headerShown: false,
-          }}
-        />
+          <Stack.Screen
+            name="Home"
+            component={Home}
+            options={{
+              title: 'Welcome',
+              headerShown: false,
+            }}
+          />
 
-        <Stack.Screen
-          name="Register"
-          component={Register}
-          options={{
-            title: 'Cadastro',
-            headerTransparent: true,
-          }}
-        />
+          <Stack.Screen
+            name="Register"
+            component={Register}
+            options={{
+              title: 'cadastro',
+              headerTransparent: true,
+              headerTintColor: '#12C2E9',
+              headerTitleAlign: 'center',
+              headerTitleStyle: {
+                fontFamily: "PTSansCaption",
+                fontSize: 22,
+                fontWeight: "400",
+              },
+            }}
+          />
 
-        <Stack.Screen
-          name="List"
-          component={List}
-          options={{
-            title: 'Wallet Test',
-            headerStyle: {
-              backgroundColor: '#fff',
-            },
-          }}
-        />
+          <Stack.Screen
+            name="List"
+            component={List}
+            options={{
+              title: 'Wallet Test',
+              headerStyle: {
+                backgroundColor: '#FFF',
+              },
+            }}
+          />
 
-      </Stack.Navigator>
-    </NavigationContainer>
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
 
