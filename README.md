@@ -125,6 +125,15 @@ fontFamily: 'Robotto-Regular'
 
 
 
+#### Json server
+
+# -- to start a server with the contents of the file db.json:
+npx json-server db.json
+
+# -- or use the shrortcut:
+npm run db
+
+
 #### Troubleshooting
 
 # -- Error running the app
@@ -140,3 +149,8 @@ cd .\android\
 # -- Starting a new react native app
 - this step IS NOT NECESSARY to run this app, but will show how this project was started for documenting reasons. The command used was:
 npx @react-native-community/cli@latest init wallet
+
+# -- Error fetching json server
+- Make sure to put on the code http:[yourIP]:3000/cards.
+- This url should be accessed on your network by other devices, because the app can't "see" the localhost.
+- One test you can make is to open the browser on the phone or emulator you are running the app and put the url EXACTLY as it is on the code. If the browser couldn't access the url, the app WILL NOT be able to access too.

@@ -7,74 +7,107 @@ import {
   TextInput,
   Text,
 } from 'react-native';
+import {
+  createStaticNavigation,
+  useNavigation,
+} from '@react-navigation/native';
 
 import type { RootState } from '../../store'
 
 import Background from '../../components/Background';
 import ButtonWithColor from '../../components/ButtonWithColor';
 import CardInput from '../../components/CardInput';
+import Title from '../../components/Title';
 import {cardNumberMask, cvvMask, dateMask} from '../../components/CardInput/masks';
 
-import { registerValidate } from './utils';
-import { ChangeRegisterNumber, ChangeRegisterName, ChangeRegisterDueDate, ChangeRegisterCvv } from './registerSlice'
+import { registerValidate, postRegister } from './utils';
+import { ChangeRegisterNumber, ChangeRegisterName, ChangeRegisterDueDate, ChangeRegisterCvv, SendingPostRegister, FetchDoneRegister, FetchFailedRegister } from './registerSlice'
 
 function Register(): React.JSX.Element {
   const number = useSelector((state: RootState) => state.register.number);
   const name = useSelector((state: RootState) => state.register.name);
-  const cvv =  useSelector((state: RootState) => state.register.cvv);
   const dueDate =  useSelector((state: RootState) => state.register.dueDate);
-
-  const validated = registerValidate({number, name, dueDate, cvv});
-
+  const cvv =  useSelector((state: RootState) => state.register.cvv);
+  const sendingPost = useSelector((state: RootState) => state.register.sendingPost);
+  const fetchStatus = useSelector((state: RootState) => state.register.fetchStatus);
   
   const dispatch = useDispatch()
+  const validated = registerValidate({number, name, dueDate, cvv});
+  const navigation = useNavigation();
 
   return (
     <Background showBackgroundShapes={true}>
-      <CardInput
-        label='número do cartão'
-        labelColor='#BBB'
-        placeholder=''
-        mask={cardNumberMask}
-        onEndEditing={(value: string) => {
-          dispatch(ChangeRegisterNumber(value));
-        }}
-      />
-      <CardInput
-        label='nome do titular do cartão'
-        placeholder=''
-        onEndEditing={(value: string) => {
-          dispatch(ChangeRegisterName(value));
-        }}
-      />
-      <View style={styles.doubleInputStyle}>
-        <CardInput
-          label='vencimento'
-          placeholder='00/00'
-          mask={dateMask}
-          onEndEditing={(value: string) => {
-            dispatch(ChangeRegisterDueDate(value));
-          }}
-          isSmall={true}
-        />
-        <CardInput
-          label='código de segurança'
-          placeholder='***'
-          mask={cvvMask}
-          onEndEditing={(value: string) => {
-            dispatch(ChangeRegisterCvv(value));
-          }}
-          isSmall={true}
-        />
-      </View>
-      <ButtonWithColor
-        pressFunction={(e: Event) => {
+      {fetchStatus === '' &&
+        <>
+          <CardInput
+            label='número do cartão'
+            labelColor='#BBB'
+            placeholder=''
+            mask={cardNumberMask}
+            onEndEditing={(value: string) => {
+              dispatch(ChangeRegisterNumber(value));
+            }}
+          />
+          <CardInput
+            label='nome do titular do cartão'
+            placeholder=''
+            onEndEditing={(value: string) => {
+              dispatch(ChangeRegisterName(value));
+            }}
+          />
+          <View style={styles.doubleInputStyle}>
+            <CardInput
+              label='vencimento'
+              placeholder='00/00'
+              mask={dateMask}
+              onEndEditing={(value: string) => {
+                dispatch(ChangeRegisterDueDate(value));
+              }}
+              isSmall={true}
+            />
+            <CardInput
+              label='código de segurança'
+              placeholder='***'
+              mask={cvvMask}
+              onEndEditing={(value: string) => {
+                dispatch(ChangeRegisterCvv(value));
+              }}
+              isSmall={true}
+            />
+          </View>
+          <ButtonWithColor
+            pressFunction={(e: Event) => {
+              if(validated && !sendingPost) {
+                dispatch(SendingPostRegister());
 
-        }}
-        text='avançar'
-        buttonColor={validated ? '#12C2E9' : '#EEE'}
-        textColor={validated ? '#FFF' : '#BBB'}
-      />
+                postRegister({
+                  number,
+                  name,
+                  dueDate,
+                  cvv,
+                  fetchDone: () => {dispatch(FetchDoneRegister())},
+                  fetchFailed: () => {dispatch(FetchFailedRegister())},
+                });
+              }
+            }}
+            text={sendingPost ? 'cadastrando o cartão' : 'avançar'}
+            buttonColor={(validated && !sendingPost) ? '#12C2E9' : '#EEE'}
+            textColor={(validated && !sendingPost) ? '#FFF' : '#BBB'}
+          />
+        </>
+      }
+      {fetchStatus === 'done' && 
+        <>
+          <Title text='Wallet Test' titleColor='#FFF' />
+          <Text style={styles.subtitleDoneStyle}>cartão cadastrado com sucesso</Text>
+          <ButtonWithColor
+            pressFunction={(e: Event) => {navigation.navigate('Home')}}
+            text='avançar'
+            buttonColor='#12C2E9'
+            textColor='#FFF'
+          />
+        </>
+      }
     </Background>
   );
 }
@@ -85,6 +118,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  subtitleDoneStyle: {
+    fontFamily: 'PTSans-Regular',
+    fontSize: 20,
+    lineHeight: 22,
+    color: '#FFF',
+    marginBottom: 32,
+  }
 });
 
 export default Register;

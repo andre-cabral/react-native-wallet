@@ -36,7 +36,7 @@ function App(): React.JSX.Element {
               headerTintColor: '#12C2E9',
               headerTitleAlign: 'center',
               headerTitleStyle: {
-                fontFamily: "PTSansCaption",
+                fontFamily: 'PTSansCaption-Regular',
                 fontSize: 22,
                 fontWeight: "400",
               },

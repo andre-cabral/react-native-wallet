@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
   },
   labelStyle:{
     height: 24,
-    fontFamily: 'PTSans',
+    fontFamily: 'PTSans-Regular',
     fontSize: 14,
     lineHeight: 16,
     textAlign: 'left',

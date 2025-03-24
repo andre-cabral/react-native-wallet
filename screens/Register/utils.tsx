@@ -29,3 +29,52 @@ export const registerValidateDueDate = (dueDate: string) => {
 export const registerValidateCvv = (cvv: string) => {
   return /\d\d\d/.test(cvv);
 }
+
+export const postRegister = ({
+  number,
+  name,
+  dueDate,
+  cvv,
+  fetchDone,
+  fetchFailed,
+}: any) => {
+  
+  fetch('http://192.168.0.185:3000/cards/', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      number,
+      name,
+      dueDate,
+      cvv,
+    }),
+  })
+  .then(response => {
+    if(response.ok){
+      fetchDone();
+    }
+  })
+  .catch(error => {
+    console.log({error});
+  });
+
+}
+
+export const fetchCards = () => {
+  fetch('http://192.168.0.185:3000/cards/')
+  .then(response => {
+    console.log({response})
+    response.json()
+  })
+  .then(json => {
+    console.log({json})
+  })
+  .catch(error => {
+    console.log({error});
+    console.error(error);
+  });
+
+}

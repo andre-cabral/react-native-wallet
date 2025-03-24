@@ -1,13 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
-import { Card } from '../../types'
-
-const initialState: Card = {
+const initialState: any = {
   number: '',
   name: '',
   dueDate: '',
-  cvv: ''
+  cvv: '',
+  sendingPost: false,
+  fetchStatus: '',
 }
 
 export const RegisterSlice = createSlice({
@@ -26,8 +26,17 @@ export const RegisterSlice = createSlice({
     ChangeRegisterCvv: (state, action: PayloadAction<string>) => {
       state.cvv = action.payload;
     },
+    SendingPostRegister: (state) => {
+      state.sendingPost = true;
+    },
+    FetchDoneRegister: (state) => {
+      state.fetchStatus = 'done';
+    },
+    FetchFailedRegister: (state) => {
+      state.fetchStatus = 'failed';
+    }
   },
 })
 
-export const { ChangeRegisterNumber, ChangeRegisterName, ChangeRegisterDueDate, ChangeRegisterCvv } = RegisterSlice.actions
+export const { ChangeRegisterNumber, ChangeRegisterName, ChangeRegisterDueDate, ChangeRegisterCvv, SendingPostRegister, FetchDoneRegister, FetchFailedRegister } = RegisterSlice.actions
 export default RegisterSlice.reducer
