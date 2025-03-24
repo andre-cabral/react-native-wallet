@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import RegisterReducer from './screens/Register/registerSlice'
+import ListReducer from './screens/List/listSlice'
 
 export const store = configureStore({
   reducer: {
     register: RegisterReducer,
+    list: ListReducer,
   },
 })
 

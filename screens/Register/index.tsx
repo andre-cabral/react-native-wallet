@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux';
 
 import {
   View,
@@ -32,7 +32,7 @@ function Register(): React.JSX.Element {
   const sendingPost = useSelector((state: RootState) => state.register.sendingPost);
   const fetchStatus = useSelector((state: RootState) => state.register.fetchStatus);
   
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const validated = registerValidate({number, name, dueDate, cvv});
   const navigation = useNavigation();
 
