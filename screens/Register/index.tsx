@@ -19,6 +19,7 @@ import ButtonWithColor from '../../components/ButtonWithColor';
 import CardInput from '../../components/CardInput';
 import Title from '../../components/Title';
 import {cardNumberMask, cvvMask, dateMask} from '../../components/CardInput/masks';
+import Card from '../../components/Card';
 
 import { registerValidate, postRegister } from './utils';
 import { ChangeRegisterNumber, ChangeRegisterName, ChangeRegisterDueDate, ChangeRegisterCvv, SendingPostRegister, FetchDoneRegister, FetchFailedRegister } from './registerSlice'
@@ -100,6 +101,7 @@ function Register(): React.JSX.Element {
         <>
           <Title text='Wallet Test' titleColor='#FFF' />
           <Text style={styles.subtitleDoneStyle}>cartão cadastrado com sucesso</Text>
+          <Card name={name} number={number} dueDate={dueDate} cardColor='#111' textColor='#FFF' />
           <ButtonWithColor
             pressFunction={(e: Event) => {navigation.navigate('Home')}}
             text='avançar'
