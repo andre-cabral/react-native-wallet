@@ -5,6 +5,8 @@ import {
   StyleSheet,
   TextInput,
   Text,
+  KeyboardType,
+  KeyboardTypeOptions,
 } from 'react-native';
 
 import MaskInput from 'react-native-mask-input';
@@ -17,6 +19,7 @@ type CardInputProps = PropsWithChildren<{
   mask?: Array<string | RegExp>,
   onEndEditing: Function,
   isSmall?: boolean,
+  keyboardType?: KeyboardTypeOptions,
 }>;
 
 function CardInput({
@@ -26,6 +29,7 @@ function CardInput({
   mask = [],
   onEndEditing,
   isSmall = false,
+  keyboardType = 'default',
 }:CardInputProps): React.JSX.Element {
 
   const colors = StyleSheet.create({
@@ -45,6 +49,8 @@ function CardInput({
       { mask?.length > 0 
         ?
           <MaskInput
+            keyboardType={keyboardType}
+            returnKeyType="next"
             style={styles.inputStyle}
             value={value}
             onChangeText={(masked, unmasked) => {
@@ -57,7 +63,9 @@ function CardInput({
             placeholder={placeholder}
           />
         :
-          <TextInput 
+          <TextInput
+            keyboardType={keyboardType}
+            returnKeyType="next"
             style={styles.inputStyle}
             onChangeText={(value) => {
               setValue(value);

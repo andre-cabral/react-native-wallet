@@ -34,9 +34,17 @@ export const RegisterSlice = createSlice({
     },
     FetchFailedRegister: (state) => {
       state.fetchStatus = 'failed';
+    },
+    ResetRegisterState: (state) => {
+      state.number = '';
+      state.name = '';
+      state.dueDate = '';
+      state.cvv = '';
+      state.sendingPost = false
+      state.fetchStatus = '';
     }
   },
 })
 
-export const { ChangeRegisterNumber, ChangeRegisterName, ChangeRegisterDueDate, ChangeRegisterCvv, SendingPostRegister, FetchDoneRegister, FetchFailedRegister } = RegisterSlice.actions
+export const { ChangeRegisterNumber, ChangeRegisterName, ChangeRegisterDueDate, ChangeRegisterCvv, SendingPostRegister, FetchDoneRegister, FetchFailedRegister, ResetRegisterState } = RegisterSlice.actions
 export default RegisterSlice.reducer

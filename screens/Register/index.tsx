@@ -22,7 +22,7 @@ import {cardNumberMask, cvvMask, dateMask} from '../../components/CardInput/mask
 import Card from '../../components/Card';
 
 import { registerValidate, postRegister } from './utils';
-import { ChangeRegisterNumber, ChangeRegisterName, ChangeRegisterDueDate, ChangeRegisterCvv, SendingPostRegister, FetchDoneRegister, FetchFailedRegister } from './registerSlice'
+import { ChangeRegisterNumber, ChangeRegisterName, ChangeRegisterDueDate, ChangeRegisterCvv, SendingPostRegister, FetchDoneRegister, FetchFailedRegister, ResetRegisterState } from './registerSlice'
 
 function Register(): React.JSX.Element {
   const number = useSelector((state: RootState) => state.register.number);
@@ -48,6 +48,7 @@ function Register(): React.JSX.Element {
             onEndEditing={(value: string) => {
               dispatch(ChangeRegisterNumber(value));
             }}
+            keyboardType='numeric'
           />
           <CardInput
             label='nome do titular do cartão'
@@ -65,6 +66,7 @@ function Register(): React.JSX.Element {
                 dispatch(ChangeRegisterDueDate(value));
               }}
               isSmall={true}
+              keyboardType='numeric'
             />
             <CardInput
               label='código de segurança'
@@ -74,6 +76,7 @@ function Register(): React.JSX.Element {
                 dispatch(ChangeRegisterCvv(value));
               }}
               isSmall={true}
+              keyboardType='numeric'
             />
           </View>
           <ButtonWithColor
@@ -103,7 +106,10 @@ function Register(): React.JSX.Element {
           <Text style={styles.subtitleDoneStyle}>cartão cadastrado com sucesso</Text>
           <Card name={name} number={number} dueDate={dueDate} cardColor='#111' textColor='#FFF' />
           <ButtonWithColor
-            pressFunction={(e: Event) => {navigation.navigate('Home')}}
+            pressFunction={(e: Event) => {
+              dispatch(ResetRegisterState());
+              navigation.navigate('Home');
+            }}
             text='avançar'
             buttonColor='#12C2E9'
             textColor='#FFF'
