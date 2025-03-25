@@ -5,6 +5,7 @@ import {
   View,
   StyleSheet,
   Text,
+  Keyboard,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
@@ -88,6 +89,8 @@ function Register(): React.JSX.Element {
                   fetchDone: () => {dispatch(FetchDoneRegister())},
                   fetchFailed: () => {dispatch(FetchFailedRegister())},
                 });
+              } else {
+                Keyboard.dismiss();
               }
             }}
             text={sendingPost ? 'cadastrando o cartão' : 'avançar'}
