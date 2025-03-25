@@ -4,13 +4,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
   View,
   StyleSheet,
-  TextInput,
   Text,
 } from 'react-native';
-import {
-  createStaticNavigation,
-  useNavigation,
-} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 import type { RootState } from '../../store'
 

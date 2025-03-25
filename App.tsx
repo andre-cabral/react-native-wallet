@@ -51,6 +51,13 @@ function App(): React.JSX.Element {
               headerStyle: {
                 backgroundColor: '#FFF',
               },
+              headerTintColor: "#142995",
+              headerTitleAlign: 'center',
+              headerTitleStyle: {
+                fontFamily: 'PTSansCaption-Regular',
+                fontSize: 22,
+                fontWeight: "400",
+              },
             }}
           />
 
