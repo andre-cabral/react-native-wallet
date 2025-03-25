@@ -134,6 +134,13 @@ npx json-server db.json
 npm run db
 
 
+
+#### Tests with jest
+# -- to run the tests:
+npm run test
+
+
+
 #### Troubleshooting
 
 # -- Error running the app
